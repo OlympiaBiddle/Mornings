@@ -6,4 +6,6 @@ import com.mornings.model.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
+	
+	Category findByName(String name);
 }
