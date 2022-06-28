@@ -16,15 +16,16 @@ import com.mornings.repository.CategoryRepository;
 @RequestMapping("/admin/categories")
 public class AdminCategoryController {
 
-	@Autowired
-	private CategoryRepository catRepo;
-	
-	@GetMapping
-	public String index(Model model) {
-		List<Category> categories = catRepo.findAll();
-		
-		model.addAttribute("categories", categories);
-		
-		return "admin/categories/index";
-	}
+    @Autowired
+    private CategoryRepository categoryRepo;
+
+    @GetMapping
+    public String index(Model model) {
+        
+        List<Category> categories = categoryRepo.findAll();
+
+        model.addAttribute("categories", categories);
+
+        return "admin/categories/index";
+    }
 }
