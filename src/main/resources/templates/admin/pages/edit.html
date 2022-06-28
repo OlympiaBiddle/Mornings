@@ -8,6 +8,8 @@
     <nav th:replace="/fragments/nav :: nav-admin"></nav>
 
     <div class="container">
+    
+<!--if page title doesn't exist, evaluate the current page title -->
 
         <h1 class="display-2" th:text="'Edit ' + ( ${pageTitle} ?: ${page.title} )"></h1>
         <a href="/admin/pages" class="btn btn-primary mb-5">Back to pages</a>
@@ -25,7 +27,8 @@
                 <input type="text" class="form-control" th:field="*{title}" placeholder="Title">
                 <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
             </div>
-
+            
+			<!--Home slug must always exist and cannot be added-->
             <div class="form-group" th:classappend="${page.slug == 'home'} ? 'd-none' : ''">
                 <label for="">Slug:</label>
                 <input type="text" class="form-control" th:field="*{slug}" th:value="${page.slug}" placeholder="Slug">

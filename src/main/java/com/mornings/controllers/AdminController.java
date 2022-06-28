@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mornings.model.Page;
@@ -30,7 +33,7 @@ public class AdminController {
     @GetMapping
     public String index(Model model) {
 
-        List<Page> pages = pageRepo.findAll();
+        List<Page> pages = pageRepo.findAllByOrderBySortingAsc();
 
         model.addAttribute("pages", pages);
 
@@ -98,6 +101,7 @@ public class AdminController {
 			RedirectAttributes redirectAttributes,
 			Model model) {
 
+		/*--- Changes the title of the current page being edited--- */
         Page pageCurrent = pageRepo.getOne(page.getId());
 
         if (bindingResult.hasErrors()) {
@@ -124,5 +128,36 @@ public class AdminController {
         }
 
         return "redirect:/admin/pages/edit/"+ page.getId();
+    }
+    
+	/* Delete Page Object */
+    @GetMapping("/delete/{id}")
+    public String edit(@PathVariable int id, RedirectAttributes redirectAttribute) {
+    	
+    	pageRepo.deleteById(id);
+    	
+    	redirectAttribute.addFlashAttribute("message", "Page was deleted");
+        redirectAttribute.addFlashAttribute("alertClass", "alert-success");
+    	
+        return "redirect:/admin/pages";
+        
+    }
+    
+	/* Reorder Slugs */
+    @SuppressWarnings("deprecation")
+	@PostMapping("/reorder")
+    public @ResponseBody String reorder(@RequestParam("id[]") int[] id) {
+        
+        int count = 1;
+        Page page;
+
+        for (int pageId : id) {
+            page = pageRepo.getOne(pageId);
+            page.setSorting(count);
+            pageRepo.save(page);
+            count++;
+        }
+
+        return "ok";
     }
 }

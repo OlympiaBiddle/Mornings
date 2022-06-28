@@ -3,15 +3,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600&display=swap');
 
-:root{
-   --yellow:#fed330;
-   --red:#e74c3c;
-   --white:#fff;
-   --black:#222;
-   --light-color:#777;
-   --border:.2rem solid var(--black);
+span.error {
+    color: red !important;
 }
 
-span.error{
-background: red;
+table.sorting tr:not(.home) {
+    cursor: pointer;
+}
+
+.ui-state-highlight {
+    border: 1px dashed #ccc;
 }
