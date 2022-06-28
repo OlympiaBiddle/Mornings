@@ -1,0 +1,27 @@
+CREATE TABLE Pages(
+id INT(11) auto_increment,
+title VARCHAR(45) NOT null,
+slug VARCHAR(45) NOT null,
+content Text NOT null,
+sorting INT(3),
+PRIMARY KEY(id)
+);
+
+CREATE TABLE category(
+id INT(11) NOT NULL Auto_categoryINCREMENT,
+NAME VARCHAR(45) NOT NULL,
+slug VARCHAR(45) NOT NULL,
+sorting INT(3),
+PRIMARY KEY(id)
+);
+
+CREATE TABLE Products(
+id INT(11) AUTO_INCREMENT,
+NAME VARCHAR(45) NOT NULL,
+slug VARCHAR(45) NOT NULL,
+description TEXT NOT NULL,
+image VARCHAR(45) NOT NULL,
+price DECIMAL(3,2) NOT null,
+category_id INT(11) NOT NULL,
+PRIMARY KEY(id)
+);
